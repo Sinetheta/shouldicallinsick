@@ -1,3 +1,4 @@
+let verdicts = require('./data/verdicts');
 let x = 0;
 let map, myLocation, position, result, service;
 let sick = [
@@ -13,18 +14,6 @@ let sick = [
   {'level':10,'search':'Hospital','searchType':'hospital','title':'Actually dying'},
   {'level':11,'search':'Taxi','title':''}
 ]; //sick
-let verdict = [
-  {'answer':'No','description': 'That\'s probably not a good idea. Sorry. Go now. Go off to your thing. Go. Shoo. Deal with it. No. Stop making that face.'},
-  {'answer':'Nyet','description': 'Work isn\'t "naturally productive". Both in the sense that it takes work to make work productive, and that productive work depends on tools and techniques to be productive. Unfortunately, today you are that tool.'},
-  {'answer':'Nah','description': 'We can evade reality, but we can\'t evade the consequences of evading reality. Now let\'s brush those teeth and get you off to the pain factory.'},
-  {'answer':'Nope','description': 'C\'mon, you can do it. Just put your pants or whatever on and get the bacon. Unless of course you\'re a vegetarian&#8212;you can go make that cheddar. And if you\'re a vegan, you don\'t really have any other choice than to obtain the cabbage. Sorry.'},
-  {'answer':'Negative','description': 'Go to work already. Why are you asking a dad joke website? You couldn\'t be that sick. Are you depressed? When was the last time you had a salad?'},
-  {'answer':'Do it','description': 'Screw it. What is anything anyway? Like, you could just be just walking down the street someday and BAM. Dead from having to pee.'},
-  {'answer':'Might as well','description': 'If you think about it, not going actually helps your career. You\'re creating a buzz. You\'re sahking things up. You\'re living the dream.'},
-  {'answer':'Probably','description': 'You wouldnt want to barf on anybody. Nowadays that\'s probably assault. Maybe even sexual assault. Look out.'},
-  {'answer':'Yep','description': 'Definitely. You look terrible and kind of smell like, what is it? Is that yogurt? You smell like yogurt.'},
-  {'answer':'YES','description': 'WTF CALL AN AMBULANCE. HOW ARE YOU BROWSING THE INTERNET RIGHT NOW?'},
-]; //verdict
 let ribbonText = () => {
   let thisDate = new Date();
   let todayDay = thisDate.getDay();
@@ -83,7 +72,7 @@ window.shouldI = () => {
       } else {
         var serviceButton = `<button class='sick-button verdict-buttons find-button' onclick='getLocation()'>Find a ${sick[x].search}</button>`;
       };
-      verdictContainer.innerHTML = `<h2>${verdict[y].answer}</h2><p>${verdict[y].description}</p><div class='button-container'>${serviceButton} ${secondOpinion}</div>`;
+      verdictContainer.innerHTML = `<h2>${verdicts[y].answer}</h2><p>${verdicts[y].description}</p><div class='button-container'>${serviceButton} ${secondOpinion}</div>`;
       break;
     case sick[2].level:
     case sick[3].level:
@@ -95,7 +84,7 @@ window.shouldI = () => {
       } else {
         serviceButton = `<button class='sick-button verdict-buttons find-button' onclick='getLocation()'>Find a ${sick[x].search}</button>`;
       };
-      verdictContainer.innerHTML = `<h2>${verdict[y].answer}</h2><p>${verdict[y].description}</p><div class='button-container'>${serviceButton} ${secondOpinion}</div>`;
+      verdictContainer.innerHTML = `<h2>${verdicts[y].answer}</h2><p>${verdicts[y].description}</p><div class='button-container'>${serviceButton} ${secondOpinion}</div>`;
       break;
     case sick[5].level:
     case sick[6].level:
@@ -107,13 +96,13 @@ window.shouldI = () => {
       } else {
         serviceButton = `<button class='sick-button find-button' style='opacity:100;' onclick='getLocation()'>Find a ${sick[x].search}</button>`;
       };
-      verdictContainer.innerHTML = `<h2>${verdict[y].answer}</h2><p>${verdict[y].description}</p><div class='button-container'>${serviceButton} ${secondOpinion}</div>`;
+      verdictContainer.innerHTML = `<h2>${verdicts[y].answer}</h2><p>${verdicts[y].description}</p><div class='button-container'>${serviceButton} ${secondOpinion}</div>`;
       break;
     case sick[8].level:
     case sick[9].level:
       y = Math.floor(Math.random() * (10-8) + 8);
       serviceButton = `<button class='sick-button find-button' style='opacity:100;' onclick='getLocation()'>Find a ${sick[x].search}</button>`;
-      verdictContainer.innerHTML = `<h2>${verdict[y].answer}</h2><p>${verdict[y].description}</p><div class='button-container'>${serviceButton} ${secondOpinion}</div>`;
+      verdictContainer.innerHTML = `<h2>${verdicts[y].answer}</h2><p>${verdicts[y].description}</p><div class='button-container'>${serviceButton} ${secondOpinion}</div>`;
       break;
   } //switch
 }; //shouldI
