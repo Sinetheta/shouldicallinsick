@@ -25,7 +25,7 @@ let verdict = [
   {'answer':'Yep','description': 'Definitely. You look terrible and kind of smell like, what is it? Is that yogurt? You smell like yogurt.'},
   {'answer':'YES','description': 'WTF CALL AN AMBULANCE. HOW ARE YOU BROWSING THE INTERNET RIGHT NOW?'},
 ]; //verdict
-ribbonText = () => {
+let ribbonText = () => {
   let thisDate = new Date();
   let todayDay = thisDate.getDay();
   let days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
@@ -36,7 +36,7 @@ ribbonText = () => {
   ribbonContainer.innerHTML = ribbonOptions[ribbonRandom];
   howSick();
 }; //ribbonText
-howSick = () => {
+let howSick = () => {
   let meterContainer = document.querySelector('.sick-meter');
   let sickMeter = `<p align='center'>So how sick are you <em>really?</em></p>
                <div class='left'></div><h1 class='meter-digit'></h1><div class='right'></div>
@@ -45,7 +45,7 @@ howSick = () => {
   meterContainer.innerHTML = sickMeter + sickButton;
   picker();
 }; //howSick
-picker = () => {
+let picker = () => {
   let left = document.querySelector('.left');
   let right = document.querySelector('.right');
   let digit = document.querySelector('.meter-digit');
@@ -67,7 +67,7 @@ picker = () => {
     }
   };
 }; //picker
-shouldI = () => {
+let shouldI = () => {
   introText = document.querySelector('.intro-text');
   introText.innerHTML = '';
   let verdictContainer = document.querySelector('.sick-meter');
@@ -117,7 +117,7 @@ shouldI = () => {
       break;
   } //switch
 }; //shouldI
-getLocation = () => {
+let getLocation = () => {
   let findButton = document.querySelector('.find-button');
   let sickResults = document.querySelector('.search-results');
   function success(position,data) {
@@ -179,7 +179,7 @@ getLocation = () => {
   navigator.geolocation.getCurrentPosition(success, error);
   sickResults.innerHTML = `<h1 align='center' style='opacity: 100;'>Loading...</h1>`;
 }; //getLocation
-locationDistance = (i) => {
+let locationDistance = (i) => {
   let placeLocation = result[i].geometry.location;
   let origin = new google.maps.LatLng(myLocation[0], myLocation[1]);
   let destination = placeLocation;
@@ -195,7 +195,7 @@ locationDistance = (i) => {
     distanceContainer[i].innerHTML = distance + " away";
   }; //callback
 }; //locationDistance
-starRating = (i) => {
+let starRating = (i) => {
   let rating = result[i].rating;
   let starWidth = 20;
   let starPosition = 0;
@@ -220,7 +220,7 @@ starRating = (i) => {
   let stars = starTag + starData;
   return stars;
 }; //starRating
-moreDetails = (i) => {
+let moreDetails = (i) => {
   let detailsContainer = document.querySelectorAll('.more-details');
   let detailsButton = document.querySelectorAll('.detail-right');
   let request = { placeId: result[i].place_id }; // request
