@@ -1,4 +1,5 @@
 'use strict';
+var loaders = require('./webpack.loaders');
 var webpack = require('webpack');
 var path = require('path');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -19,16 +20,7 @@ module.exports = {
         extensions: ['.js']
     },
     module: {
-        loaders: [{
-            test: /\.js$/,
-            exclude: /(node_modules)/,
-            use: {
-                loader: 'babel-loader',
-                options: {
-                    presets: ['env']
-                }
-            }
-        }, {
+        loaders: [...loaders, ...[{
             test: /\.scss$/,
             use: ExtractTextPlugin.extract({
                 fallback: 'style-loader',
@@ -38,7 +30,7 @@ module.exports = {
                 ]
             }),
             exclude: ['node_modules']
-        }]
+        }]]
     },
     plugins: [
         new WebpackCleanupPlugin(),
