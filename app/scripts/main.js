@@ -1,5 +1,5 @@
 let x = 0;
-let map, service, position;
+let map, myLocation, position, result, service;
 let sick = [
   {'level':1,'search':'Park','searchType':'park','title':'Totally faking'},
   {'level':2,'search':'Pub','searchType':'bar','title':'A little hungover'},
@@ -67,8 +67,8 @@ let picker = () => {
     }
   };
 }; //picker
-let shouldI = () => {
-  introText = document.querySelector('.intro-text');
+window.shouldI = () => {
+  let introText = document.querySelector('.intro-text');
   introText.innerHTML = '';
   let verdictContainer = document.querySelector('.sick-meter');
   let y = 0;
@@ -78,10 +78,10 @@ let shouldI = () => {
     case sick[1].level:
       y = Math.floor(Math.random() * 6);
       if (y < 5) {
-        serviceButton = `<button class='sick-button verdict-buttons find-button' onclick='getLocation()'>Find a ${sick[10].search}</button>`;
+        var serviceButton = `<button class='sick-button verdict-buttons find-button' onclick='getLocation()'>Find a ${sick[10].search}</button>`;
         x = 10;
       } else {
-        serviceButton = `<button class='sick-button verdict-buttons find-button' onclick='getLocation()'>Find a ${sick[x].search}</button>`;
+        var serviceButton = `<button class='sick-button verdict-buttons find-button' onclick='getLocation()'>Find a ${sick[x].search}</button>`;
       };
       verdictContainer.innerHTML = `<h2>${verdict[y].answer}</h2><p>${verdict[y].description}</p><div class='button-container'>${serviceButton} ${secondOpinion}</div>`;
       break;
@@ -117,13 +117,13 @@ let shouldI = () => {
       break;
   } //switch
 }; //shouldI
-let getLocation = () => {
+window.getLocation = () => {
   let findButton = document.querySelector('.find-button');
   let sickResults = document.querySelector('.search-results');
   function success(position,data) {
     myLocation = [position.coords.latitude,position.coords.longitude];
     let latlng  = {lat: position.coords.latitude, lng: position.coords.longitude};
-    map = new google.maps.Map(document.querySelector('.search-results'),);
+    let map = new google.maps.Map(document.querySelector('.search-results'),);
     let request = {
       location: latlng,
       rankBy: google.maps.places.RankBy.DISTANCE,
@@ -141,8 +141,8 @@ let getLocation = () => {
           let locationName = result[i].name;
           let address = result[i].vicinity;
           let addressSplit = address.split(", ");
-          streetAddress = addressSplit[0];
-          cityAddress = addressSplit[1];
+          let streetAddress = addressSplit[0];
+          let cityAddress = addressSplit[1];
           if (typeof streetAddress == 'undefined') {
             streetAddress = "No address details available";
 
@@ -173,7 +173,7 @@ let getLocation = () => {
     }; //callback
   findButton.outerHTML = "";
   }; //success
-  error = () => {
+  let error = () => {
     console.log("fail");
   }; //error
   navigator.geolocation.getCurrentPosition(success, error);
@@ -183,7 +183,7 @@ let locationDistance = (i) => {
   let placeLocation = result[i].geometry.location;
   let origin = new google.maps.LatLng(myLocation[0], myLocation[1]);
   let destination = placeLocation;
-  locService = new google.maps.DistanceMatrixService();
+  let locService = new google.maps.DistanceMatrixService();
   locService.getDistanceMatrix(
     { origins: [origin],
       destinations: [destination],
@@ -191,7 +191,7 @@ let locationDistance = (i) => {
     }, callback);
   function callback(response) {
     let distanceContainer = document.querySelectorAll('.distance');
-    distance = response.rows[0].elements[0].distance.text;
+    let distance = response.rows[0].elements[0].distance.text;
     distanceContainer[i].innerHTML = distance + " away";
   }; //callback
 }; //locationDistance
@@ -220,17 +220,17 @@ let starRating = (i) => {
   let stars = starTag + starData;
   return stars;
 }; //starRating
-let moreDetails = (i) => {
+window.moreDetails = (i) => {
   let detailsContainer = document.querySelectorAll('.more-details');
   let detailsButton = document.querySelectorAll('.detail-right');
   let request = { placeId: result[i].place_id }; // request
   service.getDetails(request, function(details) {
     if (typeof details.website !== 'undefined') {
-      splitUrl = details.website.split('/');
-      formattedUrl = `<a href='${details.website}'>${splitUrl[2]}</a>`;
+      let splitUrl = details.website.split('/');
+      var formattedUrl = `<a href='${details.website}'>${splitUrl[2]}</a>`;
     } else {
       details.website = "/#";
-      formattedUrl = "No website available";
+      var formattedUrl = "No website available";
     };
     if (typeof details.formatted_phone_number == 'undefined') {
       details.formatted_phone_number = "No phone number available";
