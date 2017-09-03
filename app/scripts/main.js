@@ -1,19 +1,7 @@
+let sicknessLevels = require('./data/sickness_levels');
 let verdicts = require('./data/verdicts');
 let x = 0;
 let map, myLocation, position, result, service;
-let sick = [
-  {'level':1,'search':'Park','searchType':'park','title':'Totally faking'},
-  {'level':2,'search':'Pub','searchType':'bar','title':'A little hungover'},
-  {'level':3,'search':'Movie Theater','searchType':'movie_theater','title':'Sort of stuffed up'},
-  {'level':4,'search':'Pub','searchType':'bar','title':'A lot hungover'},
-  {'level':5,'search':'Spa','searchType':'spa','title':'Crappy'},
-  {'level':6,'search':'Pharmacy','searchType':'pharmacy','title':'Pretty gross'},
-  {'level':7,'search':'Clinic','searchType':'doctor','title':'Truly disgusting'},
-  {'level':8,'search':'Clinic','searchType':'doctor','title':'Probably dying'},
-  {'level':9,'search':'Hospital','searchType':'hospital','title':'Patient Zero'},
-  {'level':10,'search':'Hospital','searchType':'hospital','title':'Actually dying'},
-  {'level':11,'search':'Taxi','title':''}
-]; //sick
 let ribbonText = () => {
   let thisDate = new Date();
   let todayDay = thisDate.getDay();
@@ -39,20 +27,20 @@ let picker = () => {
   let right = document.querySelector('.right');
   let digit = document.querySelector('.meter-digit');
   let desc = document.querySelector('.meter-desc');
-  digit.innerHTML = sick[0].level;
-  desc.innerHTML = sick[0].title;
+  digit.innerHTML = sicknessLevels[0].level;
+  desc.innerHTML = sicknessLevels[0].title;
   left.onclick = () => {
     if (x > 0) {
       --x;
-      digit.innerHTML = sick[x].level;
-      desc.innerHTML = sick[x].title;
+      digit.innerHTML = sicknessLevels[x].level;
+      desc.innerHTML = sicknessLevels[x].title;
     }
   };
   right.onclick = () => {
     if (x < 9) {
       x++;
-      digit.innerHTML = sick[x].level;
-      desc.innerHTML = sick[x].title;
+      digit.innerHTML = sicknessLevels[x].level;
+      desc.innerHTML = sicknessLevels[x].title;
     }
   };
 }; //picker
@@ -62,46 +50,46 @@ window.shouldI = () => {
   let verdictContainer = document.querySelector('.sick-meter');
   let y = 0;
   let secondOpinion = `<button class='sick-button verdict-buttons' onclick='location.reload()'>Get a Second Opinion</button>`;
-  switch(sick[x].level) {
-    case sick[0].level:
-    case sick[1].level:
+  switch(sicknessLevels[x].level) {
+    case sicknessLevels[0].level:
+    case sicknessLevels[1].level:
       y = Math.floor(Math.random() * 6);
       if (y < 5) {
-        var serviceButton = `<button class='sick-button verdict-buttons find-button' onclick='getLocation()'>Find a ${sick[10].search}</button>`;
+        var serviceButton = `<button class='sick-button verdict-buttons find-button' onclick='getLocation()'>Find a ${sicknessLevels[10].search}</button>`;
         x = 10;
       } else {
-        var serviceButton = `<button class='sick-button verdict-buttons find-button' onclick='getLocation()'>Find a ${sick[x].search}</button>`;
+        var serviceButton = `<button class='sick-button verdict-buttons find-button' onclick='getLocation()'>Find a ${sicknessLevels[x].search}</button>`;
       };
       verdictContainer.innerHTML = `<h2>${verdicts[y].answer}</h2><p>${verdicts[y].description}</p><div class='button-container'>${serviceButton} ${secondOpinion}</div>`;
       break;
-    case sick[2].level:
-    case sick[3].level:
-    case sick[4].level:
+    case sicknessLevels[2].level:
+    case sicknessLevels[3].level:
+    case sicknessLevels[4].level:
       y = Math.floor(Math.random() * (8-2) + 2);
       if (y < 5) {
-        serviceButton = `<button class='sick-button verdict-buttons find-button' onclick='getLocation()'>Find a ${sick[10].search}</button>`;
+        serviceButton = `<button class='sick-button verdict-buttons find-button' onclick='getLocation()'>Find a ${sicknessLevels[10].search}</button>`;
         x = 10;
       } else {
-        serviceButton = `<button class='sick-button verdict-buttons find-button' onclick='getLocation()'>Find a ${sick[x].search}</button>`;
+        serviceButton = `<button class='sick-button verdict-buttons find-button' onclick='getLocation()'>Find a ${sicknessLevels[x].search}</button>`;
       };
       verdictContainer.innerHTML = `<h2>${verdicts[y].answer}</h2><p>${verdicts[y].description}</p><div class='button-container'>${serviceButton} ${secondOpinion}</div>`;
       break;
-    case sick[5].level:
-    case sick[6].level:
-    case sick[7].level:
+    case sicknessLevels[5].level:
+    case sicknessLevels[6].level:
+    case sicknessLevels[7].level:
       y = Math.floor(Math.random() * (9-4) + 4);
       if (y < 5) {
-        serviceButton = `<button class='sick-button find-button' style='opacity:100;' onclick='getLocation()'>Find a ${sick[10].search}</button>`;
+        serviceButton = `<button class='sick-button find-button' style='opacity:100;' onclick='getLocation()'>Find a ${sicknessLevels[10].search}</button>`;
         x = 10;
       } else {
-        serviceButton = `<button class='sick-button find-button' style='opacity:100;' onclick='getLocation()'>Find a ${sick[x].search}</button>`;
+        serviceButton = `<button class='sick-button find-button' style='opacity:100;' onclick='getLocation()'>Find a ${sicknessLevels[x].search}</button>`;
       };
       verdictContainer.innerHTML = `<h2>${verdicts[y].answer}</h2><p>${verdicts[y].description}</p><div class='button-container'>${serviceButton} ${secondOpinion}</div>`;
       break;
-    case sick[8].level:
-    case sick[9].level:
+    case sicknessLevels[8].level:
+    case sicknessLevels[9].level:
       y = Math.floor(Math.random() * (10-8) + 8);
-      serviceButton = `<button class='sick-button find-button' style='opacity:100;' onclick='getLocation()'>Find a ${sick[x].search}</button>`;
+      serviceButton = `<button class='sick-button find-button' style='opacity:100;' onclick='getLocation()'>Find a ${sicknessLevels[x].search}</button>`;
       verdictContainer.innerHTML = `<h2>${verdicts[y].answer}</h2><p>${verdicts[y].description}</p><div class='button-container'>${serviceButton} ${secondOpinion}</div>`;
       break;
   } //switch
@@ -116,8 +104,8 @@ window.getLocation = () => {
     let request = {
       location: latlng,
       rankBy: google.maps.places.RankBy.DISTANCE,
-      keyword: sick[x].search,
-      type: [sick[x].searchType]
+      keyword: sicknessLevels[x].search,
+      type: [sicknessLevels[x].searchType]
     }; // request
     service = new google.maps.places.PlacesService(map);
     service.nearbySearch(request,callback);
