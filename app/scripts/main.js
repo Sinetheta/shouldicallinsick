@@ -14,12 +14,8 @@ let ribbonText = () => {
   howSick();
 }; //ribbonText
 let howSick = () => {
-  let meterContainer = document.querySelector('.sick-meter');
-  let sickMeter = `<p align='center'>So how sick are you <em>really?</em></p>
-               <div class='left'></div><h1 class='meter-digit'></h1><div class='right'></div>
-               <h2 class='meter-desc'></h2>`;
-  let sickButton = `<button class='sick-button should-i' onclick='shouldI()'>Well, Should I?!</button>`;
-  meterContainer.innerHTML = sickMeter + sickButton;
+  let sickMeterTemplate = require('../templates/sick_meter.dot');
+  document.querySelector('.sick-meter').innerHTML = sickMeterTemplate();
   picker();
 }; //howSick
 let picker = () => {
