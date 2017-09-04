@@ -23,6 +23,11 @@ module.exports = {
     resolve: {
         extensions: ['.js']
     },
+    resolveLoader: {
+        alias: {
+            'dotjs-loader': path.join(__dirname, 'webpack.dotjs-loader.js')
+        }
+    },
     module: {
         loaders: [...loaders, ...[{
             test: /\.scss$/,

@@ -7,4 +7,9 @@ module.exports = [{
             presets: ['env']
         }
     }
+}, {
+    test: /\.dot$/,
+    use: {
+        loader: 'dotjs-loader',
+    }
 }];
