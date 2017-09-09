@@ -106,43 +106,11 @@ window.getLocation = () => {
     service = new google.maps.places.PlacesService(map);
     service.nearbySearch(request,callback);
     function callback(results,status) {
-      let data = '';
-      i = 0;
+      const Location = require('./google_maps/location');
+      let locationList = require('../templates/location_list.dot');
+      let locations = results.map((r) => new Location(r));
+      sickResults.innerHTML = locationList({ locations });
       result = results;
-      if (status == google.maps.places.PlacesServiceStatus.OK) {
-        for (var i=0;i<result.length; i++) {
-          let locationName = result[i].name;
-          let address = result[i].vicinity;
-          let addressSplit = address.split(", ");
-          let streetAddress = addressSplit[0];
-          let cityAddress = addressSplit[1];
-          if (typeof streetAddress == 'undefined') {
-            streetAddress = "No address details available";
-
-          }
-          if (typeof cityAddress == 'undefined') {
-            cityAddress = "No address details available";
-
-          }
-          data += `<li>
-                      <div class='detail'>
-                        <h3>${locationName}</h3>
-                        <p>${streetAddress}</p>
-                        <p>${cityAddress}</p>
-                        <p class="distance"></p>
-                        <p>${starRating(i)}</p>
-                        <div class='more-details'></div>
-                      </div>
-                      <div class='detail-right'>
-                        <button onclick='moreDetails(${i})'>More Details</button>
-                      </div>
-                    </li>`;
-          locationDistance(i);
-        }; // for
-      } else if (status == google.maps.places.PlacesServiceStatus.ZERO_RESULTS) {
-        data += `<li><div class='detail'><h3><a>Shucks</a></h3><p>Sans dice, friend. Go to bed.</p></div></li>`;
-      }// if
-      sickResults.innerHTML = `<ul class='sick-results'>${data}</ul>`;
     }; //callback
   findButton.outerHTML = "";
   }; //success
@@ -168,31 +136,6 @@ let locationDistance = (i) => {
     distanceContainer[i].innerHTML = distance + " away";
   }; //callback
 }; //locationDistance
-let starRating = (i) => {
-  let rating = result[i].rating;
-  let starWidth = 20;
-  let starPosition = 0;
-  let starTag = '';
-  let starData = '';
-  starWidth = starWidth * Math.floor(rating);
-  for (let star = 0; star < Math.floor(rating); star++) {
-    starData += `<path id="svg" d="m${starPosition},8.04244l5.72953,0l1.77047,-5.44303l1.77047,5.44303l5.72953,0l-4.63528,3.36394l1.77056,5.44303l-4.63528,-3.36403l-4.63528,3.36403l1.77056,-5.44303l-4.63528,-3.36394z" fill="#f1c40f"/>`;
-    starPosition = starPosition + 20;
-  }; //for
-  if (rating % 1 != 0) {
-    starWidth = starWidth + 10;
-    starData += `<path id="svg" d="m${starPosition},8.28069l5.85673,0l1.80977,-5.56387l0,11.12764l-4.73818,3.43871l1.80987,-5.56386l-4.73819,-3.43862z" fill="#f1c40f"/>`;
-    starData += `</svg>`;
-  } //if
-  starTag = `<svg role="img" width="${starWidth}" height="20" xmlns="http://www.w3.org/2000/svg">
-            <title>Rating: ${rating}</title>`;
-  if (typeof rating == 'undefined') {
-    starTag = ``;
-    starData = `no rating available`;
-  } //if
-  let stars = starTag + starData;
-  return stars;
-}; //starRating
 window.moreDetails = (i) => {
   let detailsContainer = document.querySelectorAll('.more-details');
   let detailsButton = document.querySelectorAll('.detail-right');
